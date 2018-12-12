@@ -721,6 +721,19 @@
         }
         return result;
     }
+    
+    function zeropad(data) {
+        // For AES-128/Rijndael CBC in Mcrypt library from PHP and Java
+            
+        data = coerceArray(data, true);
+        var padder = 16 - (data.length % 16);
+        var result = createArray(data.length + padder);
+        copyArray(data, result);
+        for (var i = data.length; i < result.length; i++) {
+            result[i] = "0";
+        }
+        return result;
+    }
 
     function pkcs7strip(data) {
         data = coerceArray(data, true);
@@ -767,6 +780,9 @@
             pkcs7: {
                 pad: pkcs7pad,
                 strip: pkcs7strip
+            },
+            zeropad: {
+                pad: zeropad
             }
         },
 
